@@ -116,6 +116,34 @@ public class Geolocation_Controller {
                 obj_event.Check_Out_Latitude__c = Decimal.valueOf(latitude);
                 obj_event.Check_Out_Longitude__c = Decimal.valueOf(longitude);
             }
+            
+            Update UpdateEvent;
+            return EventID;
+
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+
+    @AuraEnabled
+    public static string UpdateEventCheckIn(String latitude, String longitude, String EventID, String Address){
+        try {
+            String value_Datetime = String.ValueOf(Datetime.now()).replace('T','');
+            Datetime datetime_format = Datetime.valueOf(value_Datetime);
+
+            
+            List<Event> UpdateEvent = [SELECT Id, Check_In_Address_Line__c, Check_In_Latitude__c, Check_In_Longitude__c, Check_In_Date__c, 
+            StartDateTime From Event WHERE Id=:EventID];
+
+            
+            for (Event obj_event : UpdateEvent) {
+                obj_event.Check_In_Address_Line__c = Address;
+                obj_event.Check_In_Date__c = datetime_format;
+                obj_event.StartDateTime = datetime_format;
+                obj_event.Check_In_Latitude__c = Decimal.valueOf(latitude);
+                obj_event.Check_In_Longitude__c = Decimal.valueOf(longitude);
+            }
             Update UpdateEvent;
             return EventID;
 

@@ -1,0 +1,7 @@
+<template>
+    <template if:true={showMap}>
+        <lightning-map map-markers={markers} zoom-level={zoomLevel}></lightning-map>
+    </template>
+    <br/>
+    <lightning-button label="Check In" onclick={CheckIn} title="Primary action" variant="brand-outline"></lightning-button>
+</template>
